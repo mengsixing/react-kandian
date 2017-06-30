@@ -3,11 +3,11 @@
  */
 import React from 'react'
 import Header from '../../compontents/header/header'
+import BScroll from 'better-scroll';
 import {
     Tabs,
     List,
     Flex,
-    WhiteSpace,
     Carousel
 } from 'antd-mobile'
 import axios from 'axios';
@@ -27,7 +27,10 @@ class Home extends React.Component {
             tagList: [{}],
             bannerList: [],
             newsList: [],
-            data: [1, 2, 3]
+            cid: 0,
+            scroller: '',
+            pageIndex: 0
+
         }
         //获取头部tags信息
         axios({
@@ -40,45 +43,25 @@ class Home extends React.Component {
                     item.active = false;
                 }
                 that.setState({
-                    tagList: response.data.data
+                    tagList: response.data.data,
+                    cid: response.data.data[0].id
                 });
             }
         }).then(function () {
             //获取新闻列表信息
             var cid = that.state.tagList[0].id;
-            axios.get('/api/news/news_list?cid=' + cid)
+            axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
                 .then(function (response) {
                     if (response.data.code === 0) {
                         that.setState({
-                            newsList: response.data.data.dataList
+                            cid: cid
                         });
-                        //绑定IScroll
-                        // that.$nextTick(function () {
-                        //     that.scroller = new BScroll(that.$refs.newsListWrapper, {
-                        //         click: true,
-                        //         scrollbars: true
-                        //     });
-                        //     that.scroller.on("scrollEnd", function () {
-                        //         if (that.scroller.maxScrollY == that.scroller.y &&that.canScroll) {
-                        //             //获取选中的标签id
-                        //             let tagId = that.tagList.filter(item => !!item.active)[0].id;
-                        //             let offset=(that.pageIndex+1) * 10;
-                        //             that.$http.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
-                        //                 if (response.data.code == 0) {
-                        //                     if(response.data.data.dataList.length>0){
-                        //                         that.pageIndex++;
-                        //                         that.newsList = that.newsList.concat(response.data.data.dataList);
-                        //                         that.$nextTick(function () {
-                        //                             that.scroller.refresh();
-                        //                         });
-                        //                     }
-                        //                 }
-                        //             });
-                        //         }
-                        //     });
-                        //
-                        //
-                        // });
+                        if (response.data.data.dataList.length > 0) {
+                            that.setState({
+                                pageIndex: 1,
+                                newsList: response.data.data.dataList
+                            });
+                        }
                     }
                 });
         });
@@ -86,7 +69,7 @@ class Home extends React.Component {
         axios.get('/api/face/face_list').then(function (response) {
             if (response.data.code === 0) {
                 that.setState({
-                    bannerList:response.data.data.filter(item=>item.is_show === '1')
+                    bannerList: response.data.data.filter(item => item.is_show === '1')
                 });
             }
         });
@@ -95,11 +78,61 @@ class Home extends React.Component {
     componentWillMount() {
     }
 
+    componentWillUpdate() {
+    }
+
+    componentDidUpdate() {
+        if (that.state.scroller) {
+            that.state.scroller.refresh();
+        } else {
+            that.state.scroller = new BScroll(that.refs.newsListWrapper, {
+                click: true,
+                scrollbars: true
+            });
+            that.state.scroller.on("scrollEnd", function () {
+                if (that.state.scroller.maxScrollY === that.state.scroller.y) {
+                    //获取选中的标签id
+                    let tagId = that.state.cid;
+                    let offset = (that.state.pageIndex) * 10;
+                    axios.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
+                        if (response.data.code === 0) {
+                            if (response.data.data.dataList.length > 0) {
+                                that.setState({
+                                    pageIndex: that.state.pageIndex + 1,
+                                    newsList: that.state.newsList.concat(response.data.data.dataList)
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    changeTab(key) {
+        //获取新闻列表信息
+        var cid = that.state.tagList[key].id;
+        axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
+            .then(function (response) {
+                if (response.data.code === 0) {
+                    that.setState({
+                        cid: cid
+                    });
+                    if (response.data.data.dataList.length > 0) {
+                        that.setState({
+                            pageIndex: 0,
+                            newsList: response.data.data.dataList
+                        });
+                    }
+                }
+            });
+    }
+
     render() {
         var tabpanes = this.state.tagList.map((item, index) => (
             <TabPane tab={item.name} key={index}></TabPane>
         ));
-        var bannerLists=this.state.bannerList.map((item, index) => (
+        var bannerLists = this.state.bannerList.map((item, index) => (
             <a href={item.url} key={index}>
                 <img
                     src={item.pic}
@@ -107,9 +140,10 @@ class Home extends React.Component {
                 />
             </a>
         ));
-        var newsLists=this.state.newsList.map((item, index) => (
+        var newsLists = this.state.newsList.map((item, index) => (
             <Item key={index} align="top"
-                  thumb={item.litpic} multipleLine>
+                  thumb={item.litpic.includes('http') ? item.litpic : 'http://211.149.160.35' + item.litpic}
+                  multipleLine>
                 {item.title}
                 <Brief>
                     <Flex justify="between">
@@ -120,24 +154,29 @@ class Home extends React.Component {
                 </Brief>
             </Item>
         ));
-        return <div>
+        return <div className="home">
             <Header />
-            <Tabs>
+            <Tabs onChange={this.changeTab.bind(this)}>
                 {tabpanes}
             </Tabs>
 
-            <Carousel
-                className="my-carousel"
-                autoplay={false}
-                infinite
-                selectedIndex={1}
-                swipeSpeed={35}
-            >
-                {bannerLists}
-            </Carousel>
-            <List className="my-list">
-                {newsLists}
-            </List>
+            <div ref="newsListWrapper"
+                 className="newsListWrapper">
+                <div className="scroller">
+                    <Carousel
+                        className="my-carousel"
+                        autoplay={true}
+                        infinite
+                        selectedIndex={1}
+                        swipeSpeed={35}
+                    >
+                        {bannerLists}
+                    </Carousel>
+                    <List className="my-list">
+                        {newsLists}
+                    </List>
+                </div>
+            </div>
 
         </div>;
     }
