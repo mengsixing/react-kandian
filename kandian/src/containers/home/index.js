@@ -18,7 +18,6 @@ const Brief = Item.Brief;
 axios.defaults.baseURL = 'http://211.149.160.35';
 
 var that;
-
 class Home extends React.Component {
     constructor() {
         super();
@@ -128,6 +127,10 @@ class Home extends React.Component {
             });
     }
 
+    gotoDetail(item){
+        this.props.history.push('/detail/'+item.id)
+    }
+
     render() {
         var tabpanes = this.state.tagList.map((item, index) => (
             <TabPane tab={item.name} key={index}></TabPane>
@@ -141,11 +144,11 @@ class Home extends React.Component {
             </a>
         ));
         var newsLists = this.state.newsList.map((item, index) => (
-            <Item key={index} align="top"
+            <Item onClick={this.gotoDetail.bind(this,item)} key={index} align="top"
                   thumb={item.litpic.includes('http') ? item.litpic : 'http://211.149.160.35' + item.litpic}
                   multipleLine>
                 {item.title}
-                <Brief>
+                <Brief className="news-brief">
                     <Flex justify="between">
                         <Flex.Item>{item.news_from}</Flex.Item>
                         <Flex.Item>{item.price}K币</Flex.Item>

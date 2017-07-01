@@ -16,6 +16,9 @@
 .am-list-item{
     min-height: 84px;
 }
+.am-list-brief{
+    margin-top:0.3rem!important;
+}
 
 .am-list-item .am-list-line .am-list-content{
     font-size: 16px;
@@ -34,6 +37,10 @@ position: absolute;
     left: 0;
     right: 0
 
+}
+
+.news-brief{
+    margin-top:0.2rem;
 }
 .newsListWrapper{
     position:absolute;
