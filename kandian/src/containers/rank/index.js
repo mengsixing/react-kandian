@@ -3,28 +3,55 @@
  */
 
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as tabpanelActions from '../../actions/tabpanel'
 
 class Rank extends React.Component {
     constructor(){
         super()
         this.state={
-            user:"xiaowang"
+            user:"xiaowang",
+            count2:'22'
         };
     }
     componentWillMount(){
 
     }
     componentDidMount(){
-        console.log(this.props.params)
+        console.log(this.props)
+        this.props.tabPanelActions.changeTabPanel({tab:1});
     }
+    changeUserName(){
+        this.props.tabPanelActions.changeTabPanel({tab:2});
+        console.log(this.props);
+    }
+    gotoIndex(){
+        this.props.history.push('/')
+    }
+
     render(){
         return (
             <div>
                 <p>ranking {this.props.match.params.id}</p>
                 <p>{this.state.user}</p>
+                <p>{this.props.tab}</p>
+                <p><button onClick={this.changeUserName.bind(this)}>点击改变用户名</button></p>
+                <p><button onClick={this.gotoIndex.bind(this)}>gotoIndex</button></p>
             </div>
         )
     }
 }
+function mapStateToProps(state) {
+    return { tab: state.tabpanel.tab }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        tabPanelActions: bindActionCreators(tabpanelActions, dispatch)
+    }
+}
 
-export default Rank
+ export default connect(
+    mapStateToProps,
+     mapDispatchToProps
+)(Rank)

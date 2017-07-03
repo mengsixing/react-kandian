@@ -40,6 +40,7 @@
     "react-error-overlay": "^1.0.8",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "redux": "^3.7.1",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
@@ -53,6 +54,7 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "postcss-pxtorem": "^4.0.1",
+    "redux-devtools": "^3.4.0",
     "svg-sprite-loader": "0.3.1"
   },
   "scripts": {

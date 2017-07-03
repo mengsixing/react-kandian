@@ -12,10 +12,12 @@ import {
 } from 'antd-mobile'
 import axios from 'axios';
 import './index.css'
+import { connect } from 'react-redux'
 const TabPane = Tabs.TabPane;
 const Item = List.Item;
 const Brief = Item.Brief;
 axios.defaults.baseURL = 'http://211.149.160.35';
+
 
 var that;
 class Home extends React.Component {
@@ -162,7 +164,7 @@ class Home extends React.Component {
             <Tabs onChange={this.changeTab.bind(this)}>
                 {tabpanes}
             </Tabs>
-
+<p>{this.props.username}</p>
             <div ref="newsListWrapper"
                  className="newsListWrapper">
                 <div className="scroller">
@@ -185,5 +187,10 @@ class Home extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return { username: state.userinfo.username }
+}
 
-export default Home
+export default connect(
+    mapStateToProps
+)(Home)
