@@ -13,6 +13,8 @@ import {
 import axios from 'axios';
 import './index.css'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as tabpanelActions from '../../actions/tabpanel'
 const TabPane = Tabs.TabPane;
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -77,6 +79,7 @@ class Home extends React.Component {
     }
 
     componentWillMount() {
+        this.props.tabPanelActions.changeTabPanel({panel:'home'});
     }
 
     componentWillUpdate() {
@@ -188,9 +191,15 @@ class Home extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return { username: state.userinfo.username }
+    return { panel: state.tabpanel.panel }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        tabPanelActions: bindActionCreators(tabpanelActions, dispatch)
+    }
 }
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Home)

@@ -4,8 +4,8 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as tabpanelActions from '../../actions/tabpanel'
+// import { bindActionCreators } from 'redux'
+// import * as tabpanelActions from '../../actions/tabpanel'
 
 class Rank extends React.Component {
     constructor(){
@@ -42,16 +42,16 @@ class Rank extends React.Component {
         )
     }
 }
-function mapStateToProps(state) {
-    return { tab: state.tabpanel.tab }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        tabPanelActions: bindActionCreators(tabpanelActions, dispatch)
-    }
-}
+// function mapStateToProps(state) {
+//     return { tab: state.tabpanel.tab }
+// }
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         tabPanelActions: bindActionCreators(tabpanelActions, dispatch)
+//     }
+// }
 
  export default connect(
-    mapStateToProps,
-     mapDispatchToProps
+    // mapStateToProps,
+    //  mapDispatchToProps
 )(Rank)

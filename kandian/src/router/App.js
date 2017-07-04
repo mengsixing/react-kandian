@@ -4,6 +4,7 @@ import Home from '../containers/home/'
 import Rank from '../containers/rank/'
 import Detail from '../containers/detail/'
 import { TabBar } from 'antd-mobile';
+import { connect } from 'react-redux'
 
 import {
     BrowserRouter as Router,
@@ -25,16 +26,23 @@ class APP extends React.Component{
             selectedTab: key,
         });
     }
+    componentDidMount(){
+
+    }
 
     render(){
         return (
     <div>
         <Router>
-            <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route path="/detail/:id" component={Detail}/>
-                <Route path="/rank" component={Rank}/>
-            </Switch>
+            <div>
+                <div>{this.props.tab}</div>
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <Route path="/detail/:id" component={Detail}/>
+                    <Route path="/rank" component={Rank}/>
+                </Switch>
+            </div>
+
         </Router>
         <TabBar
             unselectedTintColor="#949494"
@@ -66,6 +74,11 @@ class APP extends React.Component{
 )}
 }
 
+function mapStateToProps(state) {
+    debugger;
+    return { tab: state.tabpanel.panel }
+}
 
-
-export default APP;
+export default  connect(
+    mapStateToProps
+)(APP) ;
