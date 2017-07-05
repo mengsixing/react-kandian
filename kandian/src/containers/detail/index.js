@@ -5,6 +5,9 @@ import React from 'react'
 import axios from 'axios';
 import './detail.css'
 import BScroll from 'better-scroll';
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as tabpanelActions from '../../actions/tabpanel'
 axios.defaults.baseURL = 'http://211.149.160.35';
 var Base64 = require('js-base64').Base64;
 
@@ -22,6 +25,7 @@ class Detail extends React.Component {
 
     componentWillMount() {
         this.getDetail();
+        this.props.tabPanelActions.changeTabPanel({panel:'home'});
     }
 
     componentDidUpdate() {
@@ -101,4 +105,16 @@ class Detail extends React.Component {
     }
 }
 
-export default Detail
+function mapStateToProps(state) {
+    return { panel: state.tabpanel.panel }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        tabPanelActions: bindActionCreators(tabpanelActions, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Detail)

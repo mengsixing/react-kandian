@@ -3,7 +3,7 @@
  */
 import * as tabpanelTypes from '../actionTypes/tabpanel'
 var initialState={
-    panel:'rank'
+    panel:'home'
 };
 export default function tabpanel(state = initialState, action){
     switch (action.type) {
