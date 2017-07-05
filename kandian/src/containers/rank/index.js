@@ -41,7 +41,7 @@ class Rank extends React.Component {
     }
 }
 function mapStateToProps(state) {
-    return { tab: state.tabpanel.tab }
+    return { tab: state.tabpanel.panel }
 }
 function mapDispatchToProps(dispatch) {
     return {
