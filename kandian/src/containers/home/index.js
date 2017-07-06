@@ -1,8 +1,6 @@
-/**
- * Created by Thinkpad on 2017/6/28.
- */
 import React from 'react'
-import Header from '../../compontents/header/header'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import BScroll from 'better-scroll';
 import {
     Tabs,
@@ -10,16 +8,13 @@ import {
     Flex,
     Carousel
 } from 'antd-mobile'
-import axios from 'axios';
-import './index.css'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import axios from '../../axios/';
+import Header from '../../compontents/header/header'
 import * as tabpanelActions from '../../actions/tabpanel'
+import './index.css'
 const TabPane = Tabs.TabPane;
 const Item = List.Item;
 const Brief = Item.Brief;
-axios.defaults.baseURL = 'http://211.149.160.35';
-
 
 var that;
 class Home extends React.Component {

@@ -1,41 +1,26 @@
-/**
- * Created by yhlmmm on 2017/6/28.
- */
-
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { Result } from 'antd-mobile'
 import * as tabpanelActions from '../../actions/tabpanel'
+import logo from './notice.png'
 
 class Rank extends React.Component {
-    constructor(){
-        super()
-        this.state={
-            user:"xiaowang",
-            count2:'22'
-        };
-    }
     componentWillMount() {
+        //设置redux 中tab的值
         this.props.tabPanelActions.changeTabPanel({panel:'my'});
-    }
-    componentDidMount(){
-        console.log(this.props)
-    }
-    changeUserName(){
-        console.log(this.props);
     }
     gotoIndex(){
         this.props.history.push('/')
     }
-
     render(){
         return (
             <div>
-                <p>ranking {this.props.match.params.id}</p>
-                <p>{this.state.user}</p>
-                <p>{this.props.tab}</p>
-                <p><button onClick={this.changeUserName.bind(this)}>点击改变用户名</button></p>
-                <p><button onClick={this.gotoIndex.bind(this)}>gotoIndex</button></p>
+                <Result
+                    img={<img src={logo} alt="Logo" />}
+                    title="温馨提示"
+                    message="板块开发中！"
+                />
             </div>
         )
     }

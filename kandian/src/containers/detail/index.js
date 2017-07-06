@@ -1,16 +1,11 @@
-/**
- * Created by Thinkpad on 2017/7/1.
- */
 import React from 'react'
-import axios from 'axios';
-import './detail.css'
-import BScroll from 'better-scroll';
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+import {bindActionCreators} from 'redux'
+import BScroll from 'better-scroll';
+import axios from '../../axios/';
 import * as tabpanelActions from '../../actions/tabpanel'
-axios.defaults.baseURL = 'http://211.149.160.35';
+import './detail.css'
 var Base64 = require('js-base64').Base64;
-
 var that;
 class Detail extends React.Component {
     constructor() {
@@ -25,7 +20,7 @@ class Detail extends React.Component {
 
     componentWillMount() {
         this.getDetail();
-        this.props.tabPanelActions.changeTabPanel({panel:'home'});
+        this.props.tabPanelActions.changeTabPanel({panel: 'home'});
     }
 
     componentDidUpdate() {
@@ -94,8 +89,6 @@ class Detail extends React.Component {
                                 <div className="detail-news-content-text">
                                     <p dangerouslySetInnerHTML={{__html: that.state.newsDetail.content}}></p>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -106,7 +99,7 @@ class Detail extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return { panel: state.tabpanel.panel }
+    return {panel: state.tabpanel.panel}
 }
 function mapDispatchToProps(dispatch) {
     return {

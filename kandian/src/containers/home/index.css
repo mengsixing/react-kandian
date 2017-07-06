@@ -9,8 +9,8 @@
 }
 
 .am-list-item img{
-    width: 90px;
-    height: 70px;
+    width: 90px!important;
+    height: 70px!important;
 }
 
 .am-list-item{
