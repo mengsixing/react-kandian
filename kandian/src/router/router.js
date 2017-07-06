@@ -5,7 +5,7 @@ import Detail from '../containers/detail/'
 import {TabBar} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Route,
     Switch
 } from 'react-router-dom'
@@ -17,7 +17,7 @@ class APP extends React.Component {
                 window.location.href = '/'
                 break
             case 'my':
-                window.location.href = '/my'
+                window.location.href = '/#/my'
                 break
             default:
                 window.location.href = '/'
