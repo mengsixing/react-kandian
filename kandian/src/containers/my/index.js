@@ -19,7 +19,7 @@ class Rank extends React.Component {
                 <Result
                     img={<img src={logo} alt="Logo" />}
                     title="温馨提示"
-                    message="板块开发中！"
+                    message="我的页面！"
                 />
             </div>
         )
