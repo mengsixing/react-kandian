@@ -1,3 +1,4 @@
+//引入action，创建reducer
 import * as tabpanelTypes from '../actionTypes/tabpanel'
 
 var initialState = {
