@@ -74,7 +74,7 @@ class Home extends React.Component {
     }
 
     componentWillMount() {
-        this.props.tabPanelActions.changeTabPanel({panel:'home'});
+        this.props.bindTabPanelActions.changeTabPanel({panel:'home'});
     }
 
     componentWillUpdate() {
@@ -190,7 +190,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        tabPanelActions: bindActionCreators(tabpanelActions, dispatch)
+        //通过bindActionCreators把dispath注入进action中，调用action，则会自动触发dispath，修改store
+        bindTabPanelActions: bindActionCreators(tabpanelActions, dispatch)
     }
 }
 

@@ -1,6 +1,3 @@
-/**
- * Created by Thinkpad on 2017/6/29.
- */
 import React from 'react'
 import './header.css'
 

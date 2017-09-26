@@ -1,5 +1,2 @@
-/**
- * Created by admin on 2017/7/3.
- */
-
+//定义改变tab的actiontype
 export const CHANGE_PANEL='CHANGE_PANEL';
