@@ -4,7 +4,7 @@ import './header.css'
 class Header extends React.Component{
     render(){
         return (
-            <div className="header">看点</div>
+            <div className="header">{this.props.title}</div>
         )
     }
 }

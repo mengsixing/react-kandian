@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Result } from 'antd-mobile'
 import * as tabpanelActions from '../../actions/tabpanel'
+import Header from '../../compontents/header/header'
 import logo from './notice.png'
 
 class Rank extends React.Component {
@@ -16,10 +17,11 @@ class Rank extends React.Component {
     render(){
         return (
             <div>
+                <Header title="我的"></Header>
                 <Result
                     img={<img src={logo} alt="Logo" />}
                     title="温馨提示"
-                    message="板块开发中！"
+                    message="我的页面！"
                 />
             </div>
         )

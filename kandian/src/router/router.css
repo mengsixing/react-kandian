@@ -1,0 +1,22 @@
+.tab-panel{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 49px;
+    border-top:1px solid rgb(221, 221, 221) ;
+    display: flex;
+    align-items: center;
+}
+.tab-panel-item{
+    flex: 1;
+    text-align: center;
+
+}
+.tab-panel-item a{
+    color: #000;
+}
+
+.tab-panel-item.active a{
+    color: rgb(51, 163, 244);
+}

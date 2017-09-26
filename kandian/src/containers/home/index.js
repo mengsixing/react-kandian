@@ -158,23 +158,26 @@ class Home extends React.Component {
             </Item>
         ));
         return <div className="home">
-            <Header />
+            <Header title="看点" />
             <Tabs onChange={this.changeTab.bind(this)}>
                 {tabpanes}
             </Tabs>
-<p>{this.props.username}</p>
+
             <div ref="newsListWrapper"
                  className="newsListWrapper">
                 <div className="scroller">
-                    <Carousel
+                    {bannerLists.length>0?
+                        <Carousel
                         className="my-carousel"
                         autoplay={true}
                         infinite
                         selectedIndex={1}
                         swipeSpeed={35}
-                    >
+                        >
                         {bannerLists}
-                    </Carousel>
+                        </Carousel>:""
+                    }
+
                     <List className="my-list">
                         {newsLists}
                     </List>
