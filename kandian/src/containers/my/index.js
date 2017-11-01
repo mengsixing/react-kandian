@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Result } from 'antd-mobile'
+import { Result,Button } from 'antd-mobile'
 import * as tabpanelActions from '../../actions/tabpanel'
 import Header from '../../compontents/header/header'
 import logo from './notice.png'
@@ -14,6 +14,9 @@ class Rank extends React.Component {
     gotoIndex(){
         this.props.history.push('/')
     }
+    changePanelAsync(){
+        this.props.tabPanelActions.changeTabPanelAsync({panel:'my'});
+    }
     render(){
         return (
             <div>
@@ -23,6 +26,7 @@ class Rank extends React.Component {
                     title="温馨提示"
                     message="我的页面！"
                 />
+                <Button  onClick={this.changePanelAsync.bind(this)}>异步redux</Button>
             </div>
         )
     }
@@ -38,5 +42,5 @@ function mapDispatchToProps(dispatch) {
 
  export default connect(
     mapStateToProps,
-     mapDispatchToProps
+    mapDispatchToProps
 )(Rank)
