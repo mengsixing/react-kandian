@@ -5,6 +5,8 @@
 - react
 - react-router
 - redux
+- redux-logger
+- redux-thunk
 - axios 
 - antd design  
   
