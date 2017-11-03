@@ -1,4 +1,4 @@
-# react-kandian
+# react-kandian [![Build Status](https://travis-ci.org/yhlben/react-kandian.svg?branch=master)](https://travis-ci.org/yhlben/react-kandian)
 一个极简易的新闻站点，站点功能简单，主要用于技术练习，涵盖了react全家桶的相关知识，初学者可以借鉴！ 
 [演示地址](http://antstu.me:5000)  
 技术栈：    
