@@ -4,7 +4,7 @@ import My from '../containers/my/'
 import Detail from '../containers/detail/'
 import {connect} from 'react-redux'
 import {
-    HashRouter as Router,
+    BrowserRouter as Router,
     Route,
     Switch,
     Link
@@ -12,20 +12,6 @@ import {
 import './router.css'
 
 class APP extends React.Component {
-    press(key) {
-        switch (key) {
-            case 'home':
-                window.location.href = '/'
-                break
-            case 'my':
-                window.location.href = '/#/my'
-                break
-            default:
-                window.location.href = '/'
-                break
-        }
-    }
-
     render() {
         return (
             <div>

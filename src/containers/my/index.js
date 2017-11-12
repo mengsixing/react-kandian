@@ -17,7 +17,6 @@ class Rank extends React.Component {
         this.props.history.push('/')
     }
     clicknumAsync(){
-
         this.props.clicknumActions.changeClickNumberAsync();
     }
     render(){
