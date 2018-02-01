@@ -8,10 +8,17 @@ import Header from '../../compontents/header/header'
 import logo from './notice.png'
 var buttonText="点击加1";
 
-class Rank extends React.Component {
+class Rank extends React.PureComponent {
     componentWillMount() {
-        //设置redux 中tab的值
+        //设置redux 中tab的值(更新router样式)
         this.props.tabPanelActions.changeTabPanel({panel:'my'});
+    }
+    shouldComponentUpdate(nextProp,nextState){
+        if(nextProp.match.path==='/my' && nextProp.number===this.props.number && nextProp.loading===this.props.loading){
+            return false
+        }else{
+            return true
+        }
     }
     gotoIndex(){
         this.props.history.push('/')
@@ -23,7 +30,6 @@ class Rank extends React.Component {
         var addbutton=<Button type="primary"  onClick={this.clicknumAsync.bind(this)}>{buttonText}</Button>;
         if(this.props.loading===true){
             addbutton=<Button disabled  type="primary">正在加1...</Button>;
-            console.log('改变成+1状态');
         }
         return (
             <div>

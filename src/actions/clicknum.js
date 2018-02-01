@@ -1,8 +1,6 @@
 //引入actiontype，创建action
 import * as clicknumTypes from '../actionTypes/clicknum.js'
 
-
-
 export function changeClickNumberAsync(data) {
     return function(dispatch, getState) {
     	dispatch({

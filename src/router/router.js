@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom'
 import './router.css'
 
-class APP extends React.Component {
+class APP extends React.PureComponent {
     render() {
         return (
             <div>

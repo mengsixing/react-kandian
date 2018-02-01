@@ -17,7 +17,7 @@ const Item = List.Item;
 const Brief = Item.Brief;
 
 var that;
-class Home extends React.Component {
+class Home extends React.PureComponent {
     constructor() {
         super();
         that = this;

@@ -1,13 +1,13 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import BScroll from 'better-scroll';
 import axios from '../../axios/';
 import * as tabpanelActions from '../../actions/tabpanel'
 import './detail.css'
 var Base64 = require('js-base64').Base64;
 var that;
-class Detail extends React.Component {
+class Detail extends React.PureComponent {
     constructor() {
         super()
         this.state = {
@@ -20,7 +20,7 @@ class Detail extends React.Component {
 
     componentWillMount() {
         this.getDetail();
-        this.props.tabPanelActions.changeTabPanel({panel: 'home'});
+        this.props.tabPanelActions.changeTabPanel({ panel: 'home' });
     }
 
     componentDidUpdate() {
@@ -65,7 +65,7 @@ class Detail extends React.Component {
                     <div className="scroller">
                         <div className="detail-news-body">
                             <div className="detail-news-cover">
-                                <img src={this.state.newsDetail.litpic} alt="img"/>
+                                <img src={this.state.newsDetail.litpic} alt="img" />
                             </div>
                             <div className="detail-news-content">
                                 <div className="detail-news-tag">
@@ -75,19 +75,19 @@ class Detail extends React.Component {
                                     {this.state.newsDetail.title}
                                 </div>
                                 <div className="detail-news-tags">
-          <span className="detail-news-tags-from">
-          </span>
+                                    <span className="detail-news-tags-from">
+                                    </span>
                                     <span>
-            <span className="detail-news-tags-price">
-              {this.state.newsDetail.price}K币
-            </span>
-            <span className="detail-news-tags-read">
-              阅读：{this.state.newsDetail.click}
-            </span>
-          </span>
+                                        <span className="detail-news-tags-price">
+                                            {this.state.newsDetail.price}K币
+                                    </span>
+                                        <span className="detail-news-tags-read">
+                                            阅读：{this.state.newsDetail.click}
+                                        </span>
+                                    </span>
                                 </div>
                                 <div className="detail-news-content-text">
-                                    <p dangerouslySetInnerHTML={{__html: that.state.newsDetail.content}}></p>
+                                    <p dangerouslySetInnerHTML={{ __html: that.state.newsDetail.content }}></p>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@ class Detail extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return {panel: state.tabpanel.panel}
+    return { panel: state.tabpanel.panel }
 }
 function mapDispatchToProps(dispatch) {
     return {
