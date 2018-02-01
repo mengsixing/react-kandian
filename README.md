@@ -4,9 +4,10 @@
 技术栈：    
 - react
 - react-router
+- immutable
 - redux
 - redux-logger
-- redux-thunk
+- redux-saga
 - axios 
 - antd design  
   
