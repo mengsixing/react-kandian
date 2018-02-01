@@ -96,7 +96,10 @@ class Home extends React.PureComponent {
             that.setState(({ data }) => ({
                 data: that.state.data.update('scroller', () => new BScroll(that.refs.newsListWrapper, {
                     click: true,
-                    scrollbars: true
+                    scrollbar: {
+                        fade: true,
+                        interactive: false // 1.8.0 新增
+                    }
                 }))
             }), function () {
                 bScroll = bScroll || that.state.data.get('scroller');
