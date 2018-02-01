@@ -6,7 +6,7 @@ import * as tabpanelActions from '../../actions/tabpanel'
 import * as clicknumActions from '../../actions/clicknum'
 import Header from '../../compontents/header/header'
 import logo from './notice.png'
-var buttonText="点击加1";
+
 
 class Rank extends React.PureComponent {
     componentWillMount() {
@@ -27,7 +27,7 @@ class Rank extends React.PureComponent {
         this.props.clicknumActions.changeClickNumberAsync();
     }
     render(){
-        var addbutton=<Button type="primary"  onClick={this.clicknumAsync.bind(this)}>{buttonText}</Button>;
+        var addbutton=<Button type="primary"  onClick={this.clicknumAsync.bind(this)}>点击加1</Button>;
         if(this.props.loading===true){
             addbutton=<Button disabled  type="primary">正在加1...</Button>;
         }
