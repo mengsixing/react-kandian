@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import BScroll from 'better-scroll';
 import axios from '../../axios/';
+import { fromJS } from 'immutable'
 import * as tabpanelActions from '../../actions/tabpanel'
 import './detail.css'
 var Base64 = require('js-base64').Base64;
@@ -11,9 +12,11 @@ class Detail extends React.PureComponent {
     constructor() {
         super()
         this.state = {
-            newsDetail: {},
-            detailNewsList: [],
-            scroller: ''
+            data: fromJS({
+                newsDetail: {},
+                detailNewsList: [],
+                scroller: ''
+            })
         };
         that = this;
     }
@@ -43,10 +46,15 @@ class Detail extends React.PureComponent {
                 let newsDetail = response.data.data;
                 newsDetail.content = Base64.decode(newsDetail.content)
                 let detailNewsList = response.data.data.recommend_list.dataList;
-                that.setState({
-                    newsDetail: newsDetail,
-                    detailNewsList: detailNewsList
-                });
+
+                // that.setState({
+                //     newsDetail: newsDetail,
+                //     detailNewsList: detailNewsList
+                // });
+                that.setState(({ data }) => ({
+                    data: data.update('newsDetail', () => fromJS( newsDetail))
+                          .update('detailNewsList',()=> fromJS(detailNewsList))
+                }));
             });
     }
 
@@ -56,6 +64,10 @@ class Detail extends React.PureComponent {
 
 
     render() {
+        window.kkk = this.state.data;
+        console.log('newsDetail', this.state.data.get('newsDetail'));
+        console.log('detailNewsList', this.state.data.get('detailNewsList'));
+        console.log('getIn',this.state.data.getIn(['newsDetail', 'content']));
         return (
             <div>
                 <div className="detail-header">
@@ -65,29 +77,30 @@ class Detail extends React.PureComponent {
                     <div className="scroller">
                         <div className="detail-news-body">
                             <div className="detail-news-cover">
-                                <img src={this.state.newsDetail.litpic} alt="img" />
+                                <img src={this.state.data.getIn(['newsDetail', 'litpic'])} alt="img" />
                             </div>
                             <div className="detail-news-content">
                                 <div className="detail-news-tag">
-                                    {this.state.newsDetail.cate_name}
+                                    {this.state.data.getIn(['newsDetail','cate_name'])}
                                 </div>
                                 <div className="detail-news-title">
-                                    {this.state.newsDetail.title}
+                                {this.state.data.getIn(['newsDetail','title'])}
                                 </div>
                                 <div className="detail-news-tags">
                                     <span className="detail-news-tags-from">
                                     </span>
                                     <span>
                                         <span className="detail-news-tags-price">
-                                            {this.state.newsDetail.price}K币
+                                        {this.state.data.getIn(['newsDetail','price'])}
+                                           K币
                                     </span>
                                         <span className="detail-news-tags-read">
-                                            阅读：{this.state.newsDetail.click}
+                                            阅读： {this.state.data.getIn(['newsDetail','click'])}
                                         </span>
                                     </span>
                                 </div>
                                 <div className="detail-news-content-text">
-                                    <p dangerouslySetInnerHTML={{ __html: that.state.newsDetail.content }}></p>
+                                    <p dangerouslySetInnerHTML={{ __html: this.state.data.getIn(['newsDetail','content']) } }></p>
                                 </div>
                             </div>
                         </div>

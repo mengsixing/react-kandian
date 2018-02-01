@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import BScroll from 'better-scroll';
+import BScroll from 'better-scroll'
+import { fromJS } from 'immutable'
 import {
     Tabs,
     List,
@@ -22,13 +23,14 @@ class Home extends React.PureComponent {
         super();
         that = this;
         this.state = {
-            tagList: [{}],
-            bannerList: [],
-            newsList: [],
-            cid: 0,
-            scroller: '',
-            pageIndex: 0
-
+            data: fromJS({
+                tagList: [{}],
+                bannerList: [],
+                newsList: [],
+                cid: 0,
+                scroller: '',
+                pageIndex: 0
+            })
         }
         //获取头部tags信息
         axios({
@@ -40,25 +42,30 @@ class Home extends React.PureComponent {
                 for (var item of response.data.data) {
                     item.active = false;
                 }
-                that.setState({
-                    tagList: response.data.data,
-                    cid: response.data.data[0].id
-                });
+                that.setState(({ data }) => ({
+                    data: data.update('tagList', () => fromJS(response.data.data))
+                        .update('cid', () => response.data.data[0].id
+                        )
+                }));
             }
         }).then(function () {
             //获取新闻列表信息
-            var cid = that.state.tagList[0].id;
+            var cid = that.state.data.getIn(['tagList', 0, 'id']);
             axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
                 .then(function (response) {
                     if (response.data.code === 0) {
-                        that.setState({
-                            cid: cid
-                        });
                         if (response.data.data.dataList.length > 0) {
-                            that.setState({
-                                pageIndex: 1,
-                                newsList: response.data.data.dataList
-                            });
+                            that.setState(({ data }) => ({
+                                data:
+                                    data.update('cid', () => cid)
+                                        .update('pageIndex', () => 1)
+                                        .update('newsList', () => fromJS(response.data.data.dataList))
+                            }))
+                        } else {
+                            that.setState(({ data }) => ({
+                                data:
+                                    data.update('cid', () => cid)
+                            }))
                         }
                     }
                 });
@@ -66,76 +73,87 @@ class Home extends React.PureComponent {
         //获取banner广告信息
         axios.get('/api/face/face_list').then(function (response) {
             if (response.data.code === 0) {
-                that.setState({
-                    bannerList: response.data.data.filter(item => item.is_show === '1')
-                });
+                that.setState(({ data }) => ({
+                    data:
+                        data.update('bannerList', () => fromJS(response.data.data.filter(item => item.is_show === '1')))
+                }))
             }
         });
     }
 
     componentWillMount() {
-        this.props.bindTabPanelActions.changeTabPanel({panel:'home'});
+        this.props.bindTabPanelActions.changeTabPanel({ panel: 'home' });
     }
 
     componentWillUpdate() {
     }
 
     componentDidUpdate() {
-        if (that.state.scroller) {
-            that.state.scroller.refresh();
+        var bScroll = that.state.data.get('scroller');
+        if (bScroll) {
+            bScroll.refresh();
         } else {
-            that.state.scroller = new BScroll(that.refs.newsListWrapper, {
-                click: true,
-                scrollbars: true
-            });
-            that.state.scroller.on("scrollEnd", function () {
-                if (that.state.scroller.maxScrollY === that.state.scroller.y) {
-                    //获取选中的标签id
-                    let tagId = that.state.cid;
-                    let offset = (that.state.pageIndex) * 10;
-                    axios.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
-                        if (response.data.code === 0) {
-                            if (response.data.data.dataList.length > 0) {
-                                that.setState({
-                                    pageIndex: that.state.pageIndex + 1,
-                                    newsList: that.state.newsList.concat(response.data.data.dataList)
-                                });
+            that.setState(({ data }) => ({
+                data: that.state.data.update('scroller', () => new BScroll(that.refs.newsListWrapper, {
+                    click: true,
+                    scrollbars: true
+                }))
+            }), function () {
+                bScroll = bScroll || that.state.data.get('scroller');
+                bScroll.on("scrollEnd", function () {
+                    if (bScroll.maxScrollY === bScroll.y) {
+                        //获取选中的标签id
+                        let tagId = that.state.data.get('cid');
+                        let offset = (that.state.data.get('pageIndex')) * 10;
+                        axios.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
+                            if (response.data.code === 0) {
+                                if (response.data.data.dataList.length > 0) {
+                                    that.setState(({ data }) => ({
+                                        data:
+                                            data.update('pageIndex', () => that.state.data.pageIndex + 1)
+                                                .update('newsList', () => fromJS(that.state.data.get('newsList').toJS().concat(response.data.data.dataList)))
+                                    }));
+                                }
                             }
-                        }
-                    });
-                }
+                        });
+                    }
+                });
             });
+
         }
     }
 
     changeTab(key) {
         //获取新闻列表信息
-        var cid = that.state.tagList[key].id;
+        var cid = that.state.data.getIn(['tagList', key, 'id']);
         axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
             .then(function (response) {
                 if (response.data.code === 0) {
-                    that.setState({
-                        cid: cid
-                    });
+                    that.setState(({ data }) => ({
+                        data:
+                            data.update('cid', () => cid)
+                    }));
                     if (response.data.data.dataList.length > 0) {
-                        that.setState({
-                            pageIndex: 0,
-                            newsList: response.data.data.dataList
-                        });
+                        that.setState(({ data }) => ({
+                            data:
+                                data.update('pageIndex', () => 0)
+                                    .update('newsList', () => fromJS(response.data.data.dataList))
+                        }));
                     }
                 }
             });
     }
 
-    gotoDetail(item){
-        this.props.history.push('/detail/'+item.id)
+    gotoDetail(item) {
+        this.props.history.push('/detail/' + item.id)
     }
 
     render() {
-        var tabpanes = this.state.tagList.map((item, index) => (
+        window.kkk = this.state.data;
+        var tabpanes = this.state.data.get('tagList').toJS().map((item, index) => (
             <TabPane tab={item.name} key={index}></TabPane>
         ));
-        var bannerLists = this.state.bannerList.map((item, index) => (
+        var bannerLists = this.state.data.get('bannerList').map((item, index) => (
             <a href={item.url} key={index}>
                 <img
                     src={item.pic}
@@ -143,10 +161,10 @@ class Home extends React.PureComponent {
                 />
             </a>
         ));
-        var newsLists = this.state.newsList.map((item, index) => (
-            <Item onClick={this.gotoDetail.bind(this,item)} key={index} align="top"
-                  thumb={item.litpic.includes('http') ? item.litpic : 'http://211.149.160.35' + item.litpic}
-                  multipleLine>
+        var newsLists = this.state.data.get('newsList').toJS().map((item, index) => (
+            <Item onClick={this.gotoDetail.bind(this, item)} key={index} align="top"
+                thumb={item.litpic.includes('http') ? item.litpic : 'http://211.149.160.35' + item.litpic}
+                multipleLine>
                 {item.title}
                 <Brief className="news-brief">
                     <Flex justify="between">
@@ -164,18 +182,18 @@ class Home extends React.PureComponent {
             </Tabs>
 
             <div ref="newsListWrapper"
-                 className="newsListWrapper">
+                className="newsListWrapper">
                 <div className="scroller">
-                    {bannerLists.length>0?
+                    {bannerLists.length > 0 ?
                         <Carousel
-                        className="my-carousel"
-                        autoplay={true}
-                        infinite
-                        selectedIndex={1}
-                        swipeSpeed={35}
+                            className="my-carousel"
+                            autoplay={true}
+                            infinite
+                            selectedIndex={1}
+                            swipeSpeed={35}
                         >
-                        {bannerLists}
-                        </Carousel>:""
+                            {bannerLists}
+                        </Carousel> : ""
                     }
 
                     <List className="my-list">
