@@ -13,7 +13,6 @@ import axios from '../../axios/';
 import Header from '../../compontents/header/header'
 import * as tabpanelActions from '../../actions/tabpanel'
 import './index.css'
-const TabPane = Tabs.TabPane;
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -126,9 +125,9 @@ class Home extends React.PureComponent {
         }
     }
 
-    changeTab(key) {
+    changeTab(modal) {
         //获取新闻列表信息
-        var cid = that.state.data.getIn(['tagList', key, 'id']);
+        var cid = modal.id;
         axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
             .then(function (response) {
                 if (response.data.code === 0) {
@@ -154,9 +153,11 @@ class Home extends React.PureComponent {
     render() {
         window.kkk = this.state.data;
         var tabpanes = this.state.data.get('tagList').toJS().map((item, index) => (
-            <TabPane tab={item.name} key={index}></TabPane>
+            // <TabPane tab={item.name} key={index}></TabPane>
+            {title:item.name,id:item.id}
         ));
-        var bannerLists = this.state.data.get('bannerList').map((item, index) => (
+        console.log(tabpanes);
+        var bannerLists = this.state.data.get('bannerList').toJS().map((item, index) => (
             <a href={item.url} key={index}>
                 <img
                     src={item.pic}
@@ -180,8 +181,11 @@ class Home extends React.PureComponent {
         ));
         return <div className="home">
             <Header title="看点" />
-            <Tabs onChange={this.changeTab.bind(this)}>
-                {tabpanes}
+            <Tabs tabs={tabpanes} onChange={this.changeTab.bind(this)}>
+            {tab =>
+    (<div>
+      <p>Content of {tab.title}</p>
+    </div>)}
             </Tabs>
 
             <div ref="newsListWrapper"

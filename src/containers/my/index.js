@@ -40,11 +40,12 @@ class Rank extends React.PureComponent {
                     message="我的页面！"
                 />
                 <List>
+                <div>当前数量</div>
           <InputItem
             editable="false"
             placeholder="click label to focus input"
             value={this.props.number}
-          ><div>当前数量</div></InputItem>
+          ></InputItem>
                 </List>
                 {addbutton}
             </div>

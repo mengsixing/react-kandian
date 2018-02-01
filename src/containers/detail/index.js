@@ -46,11 +46,6 @@ class Detail extends React.PureComponent {
                 let newsDetail = response.data.data;
                 newsDetail.content = Base64.decode(newsDetail.content)
                 let detailNewsList = response.data.data.recommend_list.dataList;
-
-                // that.setState({
-                //     newsDetail: newsDetail,
-                //     detailNewsList: detailNewsList
-                // });
                 that.setState(({ data }) => ({
                     data: data.update('newsDetail', () => fromJS( newsDetail))
                           .update('detailNewsList',()=> fromJS(detailNewsList))
@@ -65,9 +60,6 @@ class Detail extends React.PureComponent {
 
     render() {
         window.kkk = this.state.data;
-        console.log('newsDetail', this.state.data.get('newsDetail'));
-        console.log('detailNewsList', this.state.data.get('detailNewsList'));
-        console.log('getIn',this.state.data.getIn(['newsDetail', 'content']));
         return (
             <div>
                 <div className="detail-header">

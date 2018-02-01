@@ -28,6 +28,9 @@
     font-size: 12px;
 }
 
+.am-tabs-default-bar-tab{
+    line-height: 30px!important;
+}
 /*手写的*/
 .home{
 position: absolute;
@@ -45,7 +48,7 @@ position: absolute;
 .newsListWrapper{
     position:absolute;
     overflow: hidden;
-    top: 1.67rem;
+    top: 40px;
     bottom: 0rem;
     left: 0;
     right: 0
