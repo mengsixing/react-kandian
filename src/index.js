@@ -2,14 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './router/router';
-import {Provider} from 'react-redux';
+import {observable} from 'mobx';
+import {Provider} from 'mobx-react';
 import registerServiceWorker from './registerServiceWorker';
-import configureStore from './store/index'
 
-// 创建 Redux 的 store 对象
-const store = configureStore()
+
+var appState = observable({
+    number: 0
+});
+
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider appState={appState}>
         <App />
     </Provider>
     , document.getElementById('root'));

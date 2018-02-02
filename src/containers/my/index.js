@@ -1,13 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { Result,Button,List  } from 'antd-mobile'
-import * as clicknumActions from '../../actions/clicknum'
 import Header from '../../compontents/header/header'
+import {inject,observer} from 'mobx-react'
 import logo from './notice.png'
 
 
-class Rank extends React.Component {
+class My extends React.Component {
     shouldComponentUpdate(nextProp,nextState){
         if(nextProp.match.path==='/my' && nextProp.number===this.props.number && nextProp.loading===this.props.loading){
             return false
@@ -19,7 +17,7 @@ class Rank extends React.Component {
         this.props.history.push('/')
     }
     clicknumAsync(){
-        this.props.clicknumActions.changeClickNumberAsync();
+        this.props.appState.number++;
     }
     render(){
         var addbutton=<Button type="primary"  onClick={this.clicknumAsync.bind(this)}>手动加1</Button>;
@@ -35,23 +33,14 @@ class Rank extends React.Component {
                     message="我的页面！"
                 />
                 <List>
-                <List.Item extra={this.props.number}>阅读数：</List.Item>
+                <List.Item extra={this.props.appState.number}>阅读数：</List.Item>
                 </List>
                 {addbutton}
             </div>
         )
     }
 }
-function mapStateToProps(state) {
-    return { number:state.clicknum.number,loading:state.clicknum.loading }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        clicknumActions: bindActionCreators(clicknumActions, dispatch)
-    }
-}
 
- export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Rank)
+ export default inject("appState")(observer(
+    My
+))

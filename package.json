@@ -3,22 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-plugin-import": "^1.6.3",
     "react-app-rewired": "^1.4.1",
-    "react-scripts": "1.1.0",
-    "babel-plugin-import": "^1.6.3"
+    "react-scripts": "1.1.0"
   },
   "dependencies": {
     "antd-mobile": "^2.1.5",
     "axios": "^0.17.1",
     "better-scroll": "^1.8.0",
     "immutable": "^3.8.2",
+    "mobx": "^3.4.1",
+    "mobx-react": "^4.3.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
-    "react-router-dom": "^4.2.2",
-    "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
-    "redux-saga": "^0.16.0"
+    "react-router-dom": "^4.2.2"
   },
   "scripts": {
     "start": "react-app-rewired start",
