@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import BScroll from 'better-scroll'
 import { fromJS } from 'immutable'
 import {
@@ -11,13 +9,15 @@ import {
 } from 'antd-mobile'
 import axios from '../../axios/';
 import Header from '../../compontents/header/header'
-import * as clicknumActions from '../../actions/clicknum'
 import './index.css'
+import {inject,observer} from 'mobx-react'
 const Item = List.Item;
 const Brief = Item.Brief;
 
 var that;
-class Home extends React.PureComponent {
+
+
+class Home extends React.Component {
     constructor() {
         super();
         that = this;
@@ -142,8 +142,7 @@ class Home extends React.PureComponent {
 
     gotoDetail(item) {
         //增加今日阅读数
-        debugger
-        this.props.clicknumActions.changeClickNumberAsync();
+        this.props.appState.number++;
         this.props.history.push('/detail/' + item.id)
     }
 
@@ -203,17 +202,7 @@ class Home extends React.PureComponent {
     }
 }
 
-function mapStateToProps(state) {
-    return { number:state.clicknum.number,loading:state.clicknum.loading }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        //通过bindActionCreators把dispath注入进action中，调用action，则会自动触发dispath，修改store
-        clicknumActions: bindActionCreators(clicknumActions, dispatch)
-    }
-}
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Home)
+export default inject("appState")(observer(
+    Home
+))
