@@ -11,7 +11,7 @@ import {
 } from 'antd-mobile'
 import axios from '../../axios/';
 import Header from '../../compontents/header/header'
-import * as tabpanelActions from '../../actions/tabpanel'
+import * as clicknumActions from '../../actions/clicknum'
 import './index.css'
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -80,12 +80,6 @@ class Home extends React.PureComponent {
         });
     }
 
-    componentWillMount() {
-        this.props.bindTabPanelActions.changeTabPanel({ panel: 'home' });
-    }
-
-    componentWillUpdate() {
-    }
 
     componentDidUpdate() {
         var bScroll = that.state.data.get('scroller');
@@ -147,14 +141,15 @@ class Home extends React.PureComponent {
     }
 
     gotoDetail(item) {
+        //增加今日阅读数
+        debugger
+        this.props.clicknumActions.changeClickNumberAsync();
         this.props.history.push('/detail/' + item.id)
     }
 
     render() {
-        window.kkk = this.state.data;
         var tabpanes = this.state.data.get('tagList').toJS().map((item, index) => (
-            // <TabPane tab={item.name} key={index}></TabPane>
-            {title:item.name,id:item.id}
+            { title: item.name, id: item.id }
         ));
         var bannerLists = this.state.data.get('bannerList').toJS().map((item, index) => (
             <a href={item.url} key={index}>
@@ -181,10 +176,6 @@ class Home extends React.PureComponent {
         return <div className="home">
             <Header title="看点" />
             <Tabs tabs={tabpanes} onChange={this.changeTab.bind(this)}>
-            {tab =>
-    (<div>
-      <p>Content of {tab.title}</p>
-    </div>)}
             </Tabs>
 
             <div ref="newsListWrapper"
@@ -213,12 +204,12 @@ class Home extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-    return { panel: state.tabpanel.panel }
+    return { number:state.clicknum.number,loading:state.clicknum.loading }
 }
 function mapDispatchToProps(dispatch) {
     return {
         //通过bindActionCreators把dispath注入进action中，调用action，则会自动触发dispath，修改store
-        bindTabPanelActions: bindActionCreators(tabpanelActions, dispatch)
+        clicknumActions: bindActionCreators(clicknumActions, dispatch)
     }
 }
 

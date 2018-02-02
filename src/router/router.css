@@ -17,6 +17,6 @@
     color: #000;
 }
 
-.tab-panel-item.active a{
+.tab-panel-item a.active{
     color: rgb(51, 163, 244);
 }

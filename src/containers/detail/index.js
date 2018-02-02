@@ -1,10 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import BScroll from 'better-scroll';
 import axios from '../../axios/';
 import { fromJS } from 'immutable'
-import * as tabpanelActions from '../../actions/tabpanel'
 import './detail.css'
 var Base64 = require('js-base64').Base64;
 var that;
@@ -23,7 +20,6 @@ class Detail extends React.PureComponent {
 
     componentWillMount() {
         this.getDetail();
-        this.props.tabPanelActions.changeTabPanel({ panel: 'home' });
     }
 
     componentDidUpdate() {
@@ -100,16 +96,6 @@ class Detail extends React.PureComponent {
     }
 }
 
-function mapStateToProps(state) {
-    return { panel: state.tabpanel.panel }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        tabPanelActions: bindActionCreators(tabpanelActions, dispatch)
-    }
-}
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Detail)
+
+export default Detail
