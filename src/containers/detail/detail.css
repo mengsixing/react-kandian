@@ -9,7 +9,7 @@
 .detail-header {
     color: #FF9900;
     line-height: 40px;
-    font-size: 18px;
+    font-size: 14px;
     background-color: rgba(0, 0, 0, 0.2);
     color: white;
     position: fixed;
@@ -222,3 +222,5 @@
     bottom: 80px;
     right: 10px;
 }
+
+

@@ -8,7 +8,7 @@ import Header from '../../compontents/header/header'
 import logo from './notice.png'
 
 
-class Rank extends React.PureComponent {
+class Rank extends React.Component {
     componentWillMount() {
         //设置redux 中tab的值(更新router样式)
         this.props.tabPanelActions.changeTabPanel({panel:'my'});
@@ -40,12 +40,10 @@ class Rank extends React.PureComponent {
                     message="我的页面！"
                 />
                 <List>
-                <div>当前数量</div>
-          <InputItem
-            editable="false"
-            placeholder="click label to focus input"
-            value={this.props.number}
-          ></InputItem>
+                  <InputItem
+                    editable="false"
+                    value={this.props.number}
+                  >当前数量</InputItem>
                 </List>
                 {addbutton}
             </div>

@@ -56,10 +56,7 @@ class Detail extends React.PureComponent {
     gotoIndex() {
         this.props.history.push('/');
     }
-
-
     render() {
-        window.kkk = this.state.data;
         return (
             <div>
                 <div className="detail-header">

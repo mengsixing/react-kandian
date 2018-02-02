@@ -156,7 +156,6 @@ class Home extends React.PureComponent {
             // <TabPane tab={item.name} key={index}></TabPane>
             {title:item.name,id:item.id}
         ));
-        console.log(tabpanes);
         var bannerLists = this.state.data.get('bannerList').toJS().map((item, index) => (
             <a href={item.url} key={index}>
                 <img
