@@ -1,4 +1,7 @@
-# react-kandian [![Build Status](https://travis-ci.org/yhlben/react-kandian.svg?branch=master)](https://travis-ci.org/yhlben/react-kandian)
+# react-kandian 
+[![Build Status](https://travis-ci.org/yhlben/react-kandian.svg?branch=master)](https://travis-ci.org/yhlben/react-kandian)
+[![codecov](https://codecov.io/gh/yhlben/react-kandian/branch/master/graph/badge.svg)](https://codecov.io/gh/yhlben/react-kandian)
+
 一个简易的新闻站点
 [演示地址](http://yinhengli.com)  
 
