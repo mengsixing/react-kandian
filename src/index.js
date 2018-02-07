@@ -1,19 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import dva from 'dva';
 import './index.css';
-import App from './router/router';
-import {observable} from 'mobx';
-import {Provider} from 'mobx-react';
-import registerServiceWorker from './registerServiceWorker';
 
+// 1. Initialize
+const app = dva();
 
-var appState = observable({
-    number: 0
-});
+// 2. Plugins
+// app.use({});
 
-ReactDOM.render(
-    <Provider appState={appState}>
-        <App />
-    </Provider>
-    , document.getElementById('root'));
-registerServiceWorker();
+// 3. Model
+// app.model(require('./models/example').default);
+
+// 4. Router
+app.router(require('./router').default);
+
+// 5. Start
+app.start('#root');

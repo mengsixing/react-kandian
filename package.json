@@ -1,28 +1,26 @@
 {
-  "name": "new",
-  "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "babel-plugin-import": "^1.6.3",
-    "codecov": "^3.0.0",
-    "react-app-rewired": "^1.4.1",
-    "react-scripts": "1.1.0"
+  "scripts": {
+    "start": "roadhog server",
+    "build": "roadhog build",
+    "lint": "eslint --ext .js src test",
+    "precommit": "npm run lint"
   },
   "dependencies": {
-    "antd-mobile": "^2.1.5",
-    "axios": "^0.17.1",
-    "better-scroll": "^1.8.0",
-    "immutable": "^3.8.2",
-    "mobx": "^3.4.1",
-    "mobx-react": "^4.3.5",
+    "dva": "^2.1.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-dom": "^16.2.0"
   },
-  "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-app-rewired eject"
+  "devDependencies": {
+    "babel-plugin-dva-hmr": "^0.3.2",
+    "eslint": "^4.14.0",
+    "eslint-config-umi": "^0.1.1",
+    "eslint-plugin-flowtype": "^2.34.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "husky": "^0.12.0",
+    "redbox-react": "^1.4.3",
+    "roadhog": "^2.0.0"
   }
 }
