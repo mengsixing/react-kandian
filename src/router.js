@@ -1,15 +1,32 @@
 import React from 'react';
-import { Router, Route, Switch } from 'dva/router';
-import IndexPage from './routes/IndexPage';
+import {Router, Route, Switch, NavLink } from 'dva/router';
+ import Home from './routes/home/index.js';
+import My from './routes/my/index.js';
+import Detail from './routes/detail/index.js';
+import routerStyle from  './router.less'
+
 
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
-      <Switch>
-        <Route path="/" exact component={IndexPage} />
-      </Switch>
+      <div>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route exact path="/detail/:id" component={Detail} />
+          <Route  path="/my" component={My} />
+        </Switch>
+        <div className={routerStyle.tabPanel}>
+          <div className={routerStyle.tabPanelItem}>
+            <NavLink exact to="/" activeClassName="active">首页</NavLink>
+          </div>
+          <div className={routerStyle.tabPanelItem}>
+            <NavLink exact to="/my" activeClassName="active">我的</NavLink>
+          </div>
+        </div>
+      </div>
     </Router>
   );
 }
+
 
 export default RouterConfig;

@@ -7,7 +7,12 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "antd-mobile": "^2.1.6",
+    "axios": "^0.17.1",
+    "babel-plugin-import": "^1.6.3",
+    "better-scroll": "^1.8.0",
     "dva": "^2.1.0",
+    "js-base64": "^2.4.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },

@@ -1,0 +1,22 @@
+.tabPanel{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 49px;
+  border-top:1px solid rgb(221, 221, 221) ;
+  display: flex;
+  align-items: center;
+}
+.tabPanelItem{
+  flex: 1;
+  text-align: center;
+  a {
+    color: #000;
+  }
+}
+
+:global(a.active){
+  color: rgb(51, 163, 244);
+}
+
