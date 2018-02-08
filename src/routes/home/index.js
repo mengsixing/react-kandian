@@ -27,51 +27,12 @@ class Home extends React.Component {
       scroller: '',
       pageIndex: 0
     }
-    //获取头部tags信息
-    axios({
-      method: 'get',
-      url: '/api/cate/cate_list'
-    }).then(function (response) {
-      if (response.data.code === 0) {
-        //循环绑定data active
-        for (var item of response.data.data) {
-          item.active = false;
-        }
-        that.setState({
-          tagList: response.data.data,
-          cid: response.data.data[0].id
-        });
-      }
-    }).then(function () {
-      //获取新闻列表信息
-      var cid = that.state.tagList[0].id;
-      axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
-        .then(function (response) {
-          if (response.data.code === 0) {
-            if (response.data.data.dataList.length > 0) {
-              that.setState({
-                cid: cid,
-                pageIndex: 1,
-                newsList: response.data.data.dataList
-              });
-            } else {
-              that.setState({
-                cid: cid,
-              });
-            }
-          }
-        });
-    });
-    //获取banner广告信息
-    axios.get('/api/face/face_list').then(function (response) {
-      if (response.data.code === 0) {
-        that.setState({
-          bannerList: response.data.data.filter(item => item.is_show === '1')
-        });
-      }
-    });
   }
 
+  componentWillMount(){
+    this.props.dispatch({type:'appState/getDefaultInfo'})
+    this.props.dispatch({type:'appState/getBanner'})
+  }
 
   componentDidUpdate() {
     var bScroll = that.state.scroller;
@@ -93,16 +54,18 @@ class Home extends React.Component {
             //获取选中的标签id
             let tagId = that.state.cid;
             let offset = that.state.pageIndex * 10;
-            axios.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
-              if (response.data.code === 0) {
-                if (response.data.data.dataList.length > 0) {
-                  that.setState({
-                    pageIndex: that.state.pageIndex + 1,
-                    newsList: that.state.newsList.concat(response.data.data.dataList)
-                  });
-                }
-              }
-            });
+            that.props.dispatch({type:'appState/getNewsList',payload:{cid:tagId,offset:offset}})
+
+            // axios.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
+            //   if (response.data.code === 0) {
+            //     if (response.data.data.dataList.length > 0) {
+            //       that.setState({
+            //         pageIndex: that.state.pageIndex + 1,
+            //         newsList: that.state.newsList.concat(response.data.data.dataList)
+            //       });
+            //     }
+            //   }
+            // });
           }
         });
       });
@@ -146,10 +109,14 @@ class Home extends React.Component {
   }
 
   render() {
-    var tabpanes = this.state.tagList.map((item, index) => (
+    console.log(this.props.bannerList);
+    var tagList=this.props.tagList|| [];
+    var newsList=this.props.newsList|| [];
+    var bannerList=this.props.bannerList|| [];
+    var tabpanes = tagList.map((item, index) => (
       { title: item.name, id: item.id }
     ));
-    var bannerLists = this.state.bannerList.map((item, index) => (
+    var bannerLists = bannerList.map((item, index) => (
       <a href={item.url} key={index}>
         <img
           src={item.pic}
@@ -157,7 +124,7 @@ class Home extends React.Component {
         />
       </a>
     ));
-    var newsLists = this.state.newsList.map((item, index) => (
+    var newsLists = newsList.map((item, index) => (
       <Item onClick={this.gotoDetail.bind(this, item)} key={index} align="top"
         thumb={item.litpic.includes('http') ? item.litpic : 'http://211.149.160.35' + item.litpic}
         multipleLine>
@@ -208,7 +175,7 @@ Home.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return { appState: state.appState };
+  return { ...state.appState };
 }
 
 export default connect(mapStateToProps)(Home);
