@@ -1,9 +1,9 @@
-import React from 'react';
-import {Router, Route, Switch, NavLink } from 'dva/router';
- import Home from './routes/home/index.js';
-import My from './routes/my/index.js';
-import Detail from './routes/detail/index.js';
-import routerStyle from  './router.less'
+import React from 'react'
+import { Router, Route, Switch, NavLink } from 'dva/router'
+import Home from './routes/home/index'
+import My from './routes/my/index'
+import Detail from './routes/detail/index'
+import routerStyle from './router.less'
 
 
 function RouterConfig({ history }) {
@@ -13,7 +13,7 @@ function RouterConfig({ history }) {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route exact path="/detail/:id" component={Detail} />
-          <Route  path="/my" component={My} />
+          <Route path="/my" component={My} />
         </Switch>
         <div className={routerStyle.tabPanel}>
           <div className={routerStyle.tabPanelItem}>
@@ -29,4 +29,4 @@ function RouterConfig({ history }) {
 }
 
 
-export default RouterConfig;
+export default RouterConfig

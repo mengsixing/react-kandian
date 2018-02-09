@@ -5,12 +5,13 @@ export function getTags() {
 }
 
 export function getNews(cid,offset) {
-  var params={
-    cid,offset
-  }
-  return request('/api/news/news_list',params);
+  return request('/api/news/news_list?cid=' + cid + '&offset=' + offset);
 }
 export function getBanner() {
   return request('/api/face/face_list');
+}
+
+export function getNewsDetail(id) {
+  return request('/api/news/news_detail?id='+id);
 }
 

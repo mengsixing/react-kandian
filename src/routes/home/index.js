@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'dva';
-import axios from 'axios';
+import React from 'react'
+import { connect } from 'dva'
+import axios from 'axios'
 import BScroll from 'better-scroll'
-import Header from '../../components/header/header.js'
+import Header from '../../components/header/header'
 import styles from './index.less'
 import {
   Tabs,
@@ -10,34 +10,28 @@ import {
   Flex,
   Carousel
 } from 'antd-mobile'
-const Item = List.Item;
-const Brief = Item.Brief;
+const Item = List.Item
+const Brief = Item.Brief
 
-
-var that;
+var that
 class Home extends React.Component {
   constructor() {
-    super();
-    that = this;
+    super()
+    that = this
     this.state = {
-      tagList: [{}],
-      bannerList: [],
-      newsList: [],
-      cid: 0,
-      scroller: '',
-      pageIndex: 0
+      scroller: ''
     }
   }
 
-  componentWillMount(){
-    this.props.dispatch({type:'appState/getDefaultInfo'})
-    this.props.dispatch({type:'appState/getBanner'})
+  componentWillMount() {
+    this.props.dispatch({ type: 'appState/getDefaultInfo' })
+    this.props.dispatch({ type: 'appState/getBanner' })
   }
 
   componentDidUpdate() {
-    var bScroll = that.state.scroller;
+    var bScroll = that.state.scroller
     if (bScroll) {
-      bScroll.refresh();
+      bScroll.refresh()
     } else {
       that.setState({
         scroller: new BScroll(that.refs.newsListWrapper, {
@@ -48,42 +42,22 @@ class Home extends React.Component {
           }
         })
       }, function () {
-        bScroll = bScroll || that.state.scroller;
+        bScroll = bScroll || that.state.scroller
         bScroll.on("scrollEnd", function () {
           if (bScroll.maxScrollY === bScroll.y) {
             //获取选中的标签id
-            let tagId = that.state.cid;
-            let offset = that.state.pageIndex * 10;
-            that.props.dispatch({type:'appState/getNewsList',payload:{cid:tagId,offset:offset}})
-
-            // axios.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
-            //   if (response.data.code === 0) {
-            //     if (response.data.data.dataList.length > 0) {
-            //       that.setState({
-            //         pageIndex: that.state.pageIndex + 1,
-            //         newsList: that.state.newsList.concat(response.data.data.dataList)
-            //       });
-            //     }
-            //   }
-            // });
+            let tagId = that.props.cid
+            let offset = that.props.pageIndex * 10
+            that.props.dispatch({ type: 'appState/getNewsList', payload: { cid: tagId, offset: offset } })
           }
         });
-      });
-      that.setState({
-        scroller: new BScroll(that.refs.newsListWrapper, {
-          click: true,
-          scrollbar: {
-            fade: true,
-            interactive: false // 1.8.0 新增
-          }
-        })
       });
     }
   }
 
   changeTab(modal) {
     //获取新闻列表信息
-    var cid = modal.id;
+    var cid = modal.id
     axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
       .then(function (response) {
         if (response.data.code === 0) {
@@ -104,15 +78,14 @@ class Home extends React.Component {
     //增加今日阅读数
     this.props.dispatch({
       type: "appState/add"
-    });
+    })
     this.props.history.push('/detail/' + item.id)
   }
 
   render() {
-    console.log(this.props.bannerList);
-    var tagList=this.props.tagList|| [];
-    var newsList=this.props.newsList|| [];
-    var bannerList=this.props.bannerList|| [];
+    var tagList = this.props.tagList || []
+    var newsList = this.props.newsList || []
+    var bannerList = this.props.bannerList || []
     var tabpanes = tagList.map((item, index) => (
       { title: item.name, id: item.id }
     ));
@@ -137,7 +110,7 @@ class Home extends React.Component {
           </Flex>
         </Brief>
       </Item>
-    ));
+    ))
     return <div className={styles.home}>
       <Header title="首页"></Header>
       <Tabs tabs={tabpanes} onChange={this.changeTab.bind(this)}>
@@ -164,18 +137,12 @@ class Home extends React.Component {
         </div>
       </div>
 
-    </div>;
+    </div>
   }
 }
 
-
-
-
-Home.propTypes = {
-};
-
 function mapStateToProps(state) {
-  return { ...state.appState };
+  return { ...state.appState }
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Home)
