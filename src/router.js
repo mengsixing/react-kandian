@@ -25,7 +25,7 @@ function RouterConfig({ history }) {
         </div>
       </div>
     </Router>
-  );
+  )
 }
 
 

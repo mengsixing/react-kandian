@@ -2,7 +2,7 @@ import React from 'react'
 import BScroll from 'better-scroll'
 import { connect } from 'dva'
 import './index.less'
-var that;
+var that
 class Detail extends React.PureComponent {
   constructor() {
     super()
@@ -14,7 +14,7 @@ class Detail extends React.PureComponent {
 
   componentWillMount() {
     //获取详情信息
-    this.props.dispatch({ type: 'appState/getNewsDetail', payload: { id: that.props.match.params.id } })
+    this.props.dispatch({ type: 'detailState/getNewsDetail', payload: { id: that.props.match.params.id } })
   }
 
   componentDidUpdate() {
@@ -87,7 +87,7 @@ class Detail extends React.PureComponent {
 }
 
 function mapStateToProps(state) {
-  return { ...state.appState }
+  return { ...state.detailState }
 }
 
 

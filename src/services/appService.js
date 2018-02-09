@@ -1,17 +1,6 @@
-import request from '../utils/request';
-
-export function getTags() {
-  return request('/api/cate/cate_list');
+//延迟1s执行函数
+export function delay(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout)
+  })
 }
-
-export function getNews(cid,offset) {
-  return request('/api/news/news_list?cid=' + cid + '&offset=' + offset);
-}
-export function getBanner() {
-  return request('/api/face/face_list');
-}
-
-export function getNewsDetail(id) {
-  return request('/api/news/news_detail?id='+id);
-}
-

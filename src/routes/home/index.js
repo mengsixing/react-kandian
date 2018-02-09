@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'dva'
-import axios from 'axios'
 import BScroll from 'better-scroll'
 import Header from '../../components/header/header'
 import styles from './index.less'
@@ -24,10 +23,36 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
-    this.props.dispatch({ type: 'appState/getDefaultInfo' })
-    this.props.dispatch({ type: 'appState/getBanner' })
+     this.props.dispatch({ type: 'homeState/getDefaultInfo' })
+     this.props.dispatch({ type: 'homeState/getBanner' })
   }
 
+  componentDidMount(){
+    var bScroll = that.state.scroller
+    if (bScroll) {
+      bScroll.refresh()
+    } else {
+      that.setState({
+        scroller: new BScroll(that.refs.newsListWrapper, {
+          click: true,
+          scrollbar: {
+            fade: true,
+            interactive: false
+          }
+        })
+      }, function () {
+        bScroll = bScroll || that.state.scroller
+        bScroll.on("scrollEnd", function () {
+          if (bScroll.maxScrollY === bScroll.y) {
+            //获取选中的标签id
+            let tagId = that.props.cid
+            let offset = that.props.pageIndex * 10
+            that.props.dispatch({ type: 'homeState/getNewsList', payload: { cid: tagId, offset: offset } })
+          }
+        });
+      });
+    }
+  }
   componentDidUpdate() {
     var bScroll = that.state.scroller
     if (bScroll) {
@@ -48,7 +73,7 @@ class Home extends React.Component {
             //获取选中的标签id
             let tagId = that.props.cid
             let offset = that.props.pageIndex * 10
-            that.props.dispatch({ type: 'appState/getNewsList', payload: { cid: tagId, offset: offset } })
+            that.props.dispatch({ type: 'homeState/getNewsList', payload: { cid: tagId, offset: offset } })
           }
         });
       });
@@ -58,20 +83,7 @@ class Home extends React.Component {
   changeTab(modal) {
     //获取新闻列表信息
     var cid = modal.id
-    axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
-      .then(function (response) {
-        if (response.data.code === 0) {
-          that.setState({
-            cid: cid
-          });
-          if (response.data.data.dataList.length > 0) {
-            that.setState({
-              pageIndex: 0,
-              newsList: response.data.data.dataList
-            });
-          }
-        }
-      });
+    that.props.dispatch({type:'homeState/getTagNewsList', payload: { cid: cid, offset: 0 }})
   }
 
   gotoDetail(item) {
@@ -142,7 +154,7 @@ class Home extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { ...state.appState }
+  return { ...state.homeState,...state.appState }
 }
 
 export default connect(mapStateToProps)(Home)

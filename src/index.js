@@ -1,7 +1,4 @@
 import dva from 'dva'
-import axios from 'axios'
-
-axios.defaults.baseURL = 'http://211.149.160.35'
 
 // 1. Initialize
 const app = dva()
@@ -10,7 +7,9 @@ const app = dva()
 // app.use({})
 
 // 3. Model
- app.model(require('./models/appModel').default)
+app.model(require('./models/appModel').default)
+app.model(require('./models/homeModel').default)
+app.model(require('./models/detailModel').default)
 
 // 4. Router
 app.router(require('./router').default)
