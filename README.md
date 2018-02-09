@@ -9,7 +9,7 @@
 
 ---
 
-## 技术栈:
+### 技术栈:
 
 - react
 - dva
@@ -19,9 +19,9 @@
   - fetch
 - antd design  
 
-## 脚手架工具:
+### 脚手架工具:
 
-dva-cli  
+- dva-cli  
 
 ## 运行方式:
 
