@@ -7,20 +7,19 @@ import {
     Flex,
     Carousel
 } from 'antd-mobile'
-import axios from '../../axios/';
+import axios from '../../axios/'
 import Header from '../../compontents/header/header'
 import './index.css'
-import {inject,observer} from 'mobx-react'
-const Item = List.Item;
-const Brief = Item.Brief;
+import { inject, observer } from 'mobx-react'
+const Item = List.Item
+const Brief = Item.Brief
 
-var that;
-
+var that
 
 class Home extends React.Component {
     constructor() {
-        super();
-        that = this;
+        super()
+        that = this
         this.state = {
             data: fromJS({
                 tagList: [{}],
@@ -37,10 +36,6 @@ class Home extends React.Component {
             url: '/api/cate/cate_list'
         }).then(function (response) {
             if (response.data.code === 0) {
-                //循环绑定data active
-                for (var item of response.data.data) {
-                    item.active = false;
-                }
                 that.setState(({ data }) => ({
                     data: data.update('tagList', () => fromJS(response.data.data))
                         .update('cid', () => response.data.data[0].id
@@ -82,74 +77,74 @@ class Home extends React.Component {
 
 
     componentDidUpdate() {
-        var bScroll = that.state.data.get('scroller');
+        var bScroll = that.state.data.get('scroller')
         if (bScroll) {
-            bScroll.refresh();
+            bScroll.refresh()
         } else {
             that.setState(({ data }) => ({
                 data: that.state.data.update('scroller', () => new BScroll(that.refs.newsListWrapper, {
                     click: true,
                     scrollbar: {
                         fade: true,
-                        interactive: false // 1.8.0 新增
+                        interactive: false
                     }
                 }))
             }), function () {
-                bScroll = bScroll || that.state.data.get('scroller');
+                bScroll = bScroll || that.state.data.get('scroller')
                 bScroll.on("scrollEnd", function () {
                     if (bScroll.maxScrollY === bScroll.y) {
                         //获取选中的标签id
-                        let tagId = that.state.data.get('cid');
-                        let offset = (that.state.data.get('pageIndex')) * 10;
+                        let tagId = that.state.data.get('cid')
+                        let offset = (that.state.data.get('pageIndex')) * 10
                         axios.get('/api/news/news_list?cid=' + tagId + '&offset=' + offset).then(function (response) {
                             if (response.data.code === 0) {
                                 if (response.data.data.dataList.length > 0) {
                                     that.setState(({ data }) => ({
                                         data:
-                                            data.update('pageIndex', () => that.state.data.pageIndex + 1)
+                                            data.update('pageIndex', () => (that.state.data.get('pageIndex') + 1))
                                                 .update('newsList', () => fromJS(that.state.data.get('newsList').toJS().concat(response.data.data.dataList)))
-                                    }));
+                                    }))
                                 }
                             }
-                        });
+                        })
                     }
-                });
-            });
+                })
+            })
 
         }
     }
 
     changeTab(modal) {
         //获取新闻列表信息
-        var cid = modal.id;
+        var cid = modal.id
         axios.get('/api/news/news_list?cid=' + cid + '&offset=0')
             .then(function (response) {
                 if (response.data.code === 0) {
                     that.setState(({ data }) => ({
                         data:
                             data.update('cid', () => cid)
-                    }));
+                    }))
                     if (response.data.data.dataList.length > 0) {
                         that.setState(({ data }) => ({
                             data:
                                 data.update('pageIndex', () => 0)
                                     .update('newsList', () => fromJS(response.data.data.dataList))
-                        }));
+                        }))
                     }
                 }
-            });
+            })
     }
 
     gotoDetail(item) {
         //增加今日阅读数
-        this.props.appState.number++;
+        this.props.appState.number++
         this.props.history.push('/detail/' + item.id)
     }
 
     render() {
         var tabpanes = this.state.data.get('tagList').toJS().map((item, index) => (
             { title: item.name, id: item.id }
-        ));
+        ))
         var bannerLists = this.state.data.get('bannerList').toJS().map((item, index) => (
             <a href={item.url} key={index}>
                 <img
@@ -157,7 +152,7 @@ class Home extends React.Component {
                     alt="icon"
                 />
             </a>
-        ));
+        ))
         var newsLists = this.state.data.get('newsList').toJS().map((item, index) => (
             <Item onClick={this.gotoDetail.bind(this, item)} key={index} align="top"
                 thumb={item.litpic.includes('http') ? item.litpic : 'http://211.149.160.35' + item.litpic}
@@ -171,7 +166,7 @@ class Home extends React.Component {
                     </Flex>
                 </Brief>
             </Item>
-        ));
+        ))
         return <div className="home">
             <Header title="看点" />
             <Tabs tabs={tabpanes} onChange={this.changeTab.bind(this)}>
@@ -198,11 +193,9 @@ class Home extends React.Component {
                 </div>
             </div>
 
-        </div>;
+        </div>
     }
 }
 
-
-export default inject("appState")(observer(
-    Home
-))
+//注入appState状态
+export default inject("appState")(observer(Home))

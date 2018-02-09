@@ -1,25 +1,24 @@
 import React from 'react'
-import BScroll from 'better-scroll';
-import axios from '../../axios/';
+import BScroll from 'better-scroll'
+import axios from '../../axios/'
 import { fromJS } from 'immutable'
 import './detail.css'
-var Base64 = require('js-base64').Base64;
-var that;
+var Base64 = require('js-base64').Base64
+var that
 class Detail extends React.PureComponent {
     constructor() {
         super()
         this.state = {
             data: fromJS({
                 newsDetail: {},
-                detailNewsList: [],
                 scroller: ''
             })
         };
-        that = this;
+        that = this
     }
 
     componentWillMount() {
-        this.getDetail();
+        this.getDetail()
     }
 
     componentDidUpdate() {
@@ -41,16 +40,14 @@ class Detail extends React.PureComponent {
             .then(function (response) {
                 let newsDetail = response.data.data;
                 newsDetail.content = Base64.decode(newsDetail.content)
-                let detailNewsList = response.data.data.recommend_list.dataList;
                 that.setState(({ data }) => ({
-                    data: data.update('newsDetail', () => fromJS( newsDetail))
-                          .update('detailNewsList',()=> fromJS(detailNewsList))
-                }));
-            });
+                    data: data.update('newsDetail', () => fromJS(newsDetail))
+                }))
+            })
     }
 
     gotoIndex() {
-        this.props.history.push('/');
+        this.props.history.push('/')
     }
     render() {
         return (
@@ -66,26 +63,26 @@ class Detail extends React.PureComponent {
                             </div>
                             <div className="detail-news-content">
                                 <div className="detail-news-tag">
-                                    {this.state.data.getIn(['newsDetail','cate_name'])}
+                                    {this.state.data.getIn(['newsDetail', 'cate_name'])}
                                 </div>
                                 <div className="detail-news-title">
-                                {this.state.data.getIn(['newsDetail','title'])}
+                                    {this.state.data.getIn(['newsDetail', 'title'])}
                                 </div>
                                 <div className="detail-news-tags">
                                     <span className="detail-news-tags-from">
                                     </span>
                                     <span>
                                         <span className="detail-news-tags-price">
-                                        {this.state.data.getIn(['newsDetail','price'])}
-                                           K币
+                                            {this.state.data.getIn(['newsDetail', 'price'])}
+                                            K币
                                     </span>
                                         <span className="detail-news-tags-read">
-                                            阅读： {this.state.data.getIn(['newsDetail','click'])}
+                                            阅读： {this.state.data.getIn(['newsDetail', 'click'])}
                                         </span>
                                     </span>
                                 </div>
                                 <div className="detail-news-content-text">
-                                    <p dangerouslySetInnerHTML={{ __html: this.state.data.getIn(['newsDetail','content']) } }></p>
+                                    <p dangerouslySetInnerHTML={{ __html: this.state.data.getIn(['newsDetail', 'content']) }}></p>
                                 </div>
                             </div>
                         </div>
