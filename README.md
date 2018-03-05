@@ -1,16 +1,16 @@
 # react-kandian 
+
+一个简易的新闻站点
+
 [![Build Status](https://travis-ci.org/yhlben/react-kandian.svg?branch=master)](https://travis-ci.org/yhlben/react-kandian)
 [![codecov](https://codecov.io/gh/yhlben/react-kandian/branch/master/graph/badge.svg)](https://codecov.io/gh/yhlben/react-kandian)
 
 * [演示地址](http://yinhengli.com)
 * [vue版](https://github.com/yhlben/vue-kandian)
+* [angular版](https://github.com/yhlben/angular-kandian)
 
+## redux分支
 
-一个简易的新闻站点
-
----
-
-### redux分支
 - react
 - react-router
 - immutable
@@ -20,14 +20,16 @@
 - axios
 - antd design
 
-### mobx分支
+## mobx分支
+
 - react
 - react-router
 - mobx
 - axios
 - antd design
 
-### dva分支
+## dva分支
+
 - react
 - react-router
 - redux
@@ -35,17 +37,19 @@
 - fetch
 - antd design
 
-### 脚手架工具:
+## 脚手架工具
+
 - create-react-app
 - dva-cli
 
-### 运行方式:
-1、yarn启动
+## 运行方式
+
+### yarn启动
 
 - yarn install
 - yarn run start  
 
-2、npm启动
+### npm启动
 
 - npm install
 - npm run start
