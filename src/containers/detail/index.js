@@ -39,7 +39,7 @@ class Detail extends React.PureComponent {
         axios.get('/api/news/news_detail?id=' + that.props.match.params.id)
             .then(function (response) {
                 let newsDetail = response.data.data;
-                newsDetail.content = Base64.decode(newsDetail.content)
+                newsDetail.content = Base64.decode(newsDetail.content).replace(/\/Uploads\/images/g,'http://211.149.160.35/Uploads/images');
                 that.setState(({ data }) => ({
                     data: data.update('newsDetail', () => fromJS(newsDetail))
                 }))
