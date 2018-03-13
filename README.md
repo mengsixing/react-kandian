@@ -15,7 +15,7 @@
 - react-router
 - immutable
 - redux
-- redux-saga
+- redux-observable
 - axios
 - antd design  
 
