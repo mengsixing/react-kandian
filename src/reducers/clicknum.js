@@ -2,7 +2,7 @@
 import * as clicknumTypes from '../actionTypes/clicknum'
 
 var initialState = {
-	number:0,
+	number:1,
 	loading:false
 };
 
@@ -14,9 +14,9 @@ export default function clicknum(state = initialState, action) {
         		obj.loading=false
             return  obj;
         case clicknumTypes.LOADING:
-        		var obj2= Object.create(state);
-        		obj2.loading=true;
-            return obj2;
+            return {...state,loading:true};
+        case clicknumTypes.INCREMENT_ASYNC:
+            return {...state,loading:true};
         default:
             return state
     }

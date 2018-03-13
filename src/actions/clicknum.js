@@ -7,3 +7,18 @@ export function changeClickNumberAsync(data) {
         payload: data
     };
 }
+
+
+export function changeClickNumber(data) {
+    return {
+        type: clicknumTypes.CHANGE_NUMBER,
+        payload: data
+    };
+}
+
+export function showLoading(data) {
+    return {
+        type: clicknumTypes.LOADING,
+        payload: data
+    };
+}

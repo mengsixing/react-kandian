@@ -1,12 +1,17 @@
 import reducer from '../reducers/'
 import {createStore,applyMiddleware} from 'redux'
 import logger from 'redux-logger'
-import createSagaMiddleware from 'redux-saga'
-import rootSaga from '../sagas/sagas'
 
-const sagaMiddleware = createSagaMiddleware()
+import myRootEpic from '../epics/epic.root'
+import { combineEpics } from 'redux-observable';
+import { createEpicMiddleware } from 'redux-observable';
+
+const rootEpic = combineEpics(
+    myRootEpic
+  );
+  const epicMiddleware = createEpicMiddleware(rootEpic);
+
 export default function configureStore(initState){
-    const store = createStore(reducer,initState,applyMiddleware(logger,sagaMiddleware));
-    sagaMiddleware.run(rootSaga)
+    const store = createStore(reducer,initState,applyMiddleware(logger,epicMiddleware));
     return store;
 }

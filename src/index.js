@@ -6,6 +6,8 @@ import {Provider} from 'react-redux';
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store/index'
 
+import 'rxjs';
+
 // 创建 Redux 的 store 对象
 const store = configureStore()
 ReactDOM.render(
