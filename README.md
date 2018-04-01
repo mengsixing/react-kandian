@@ -1,6 +1,6 @@
 # react-kandian 
 
-一个简易的新闻站点
+一个简易的新闻站点(react不同主流框架实现，可切换分支查看)
 
 [![Build Status](https://travis-ci.org/yhlben/react-kandian.svg?branch=master)](https://travis-ci.org/yhlben/react-kandian)
 [![codecov](https://codecov.io/gh/yhlben/react-kandian/branch/master/graph/badge.svg)](https://codecov.io/gh/yhlben/react-kandian)
