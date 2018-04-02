@@ -5,32 +5,45 @@
 
 [在线预览](http://yinhengli.com)  
 
-一个简易的新闻站点
+一个简易的新闻站点(切换分支可查看不同技术栈)
 
----
+## react技术相关
 
-### 技术栈:
+### 核心
 
-- react
-- react-router
-- immutable
-- redux
-- redux-saga
-- axios
-- antd design  
+* react
+* react-dom
 
-### 脚手架工具:
+### 路由
 
-- create-react-app 
+* react-router
 
-### 运行方式:
+### 状态管理
 
-1、yarn 启动  
-  - yarn install
-  - yarn run start  
-  
-2、npm 启动  
-  - npm install
-  - npm run start
+* redux
+* mobx
+
+### 性能优化
+
+* immutable (配合shouldComponentUpdate,侵入性太强,可以使用seamless-immutable,immer解决)
+* reselect  (优化react-redux)
+
+### 处理异步
+
+* redux-thunk
+* redux-saga        (抽离sagas文件,简化reducer)
+* redex-observable  (抽离epic文件,简化reducer,需引入rxjs)
+
+### 构建工具
+
+* webpack  (编译jsx,css-in-js,压缩合并打包等)
+
+
+### 优秀的脚手架
+
+* create-react-app
+* dva-cli
+
+
   
 > 提示：切换分支查看不同版本
