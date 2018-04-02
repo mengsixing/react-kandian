@@ -9,14 +9,9 @@ var initialState = {
 export default function clicknum(state = initialState, action) {
     switch (action.type) {
         case clicknumTypes.CHANGE_NUMBER:
-        		var obj= Object.create(state);
-        		obj.number++;
-        		obj.loading=false
-            return  obj;
+            return  {...state,number:state.number+1,loading:false};
         case clicknumTypes.LOADING:
-        		var obj2= Object.create(state);
-        		obj2.loading=true;
-            return obj2;
+            return {...state,loading:true};
         default:
             return state
     }

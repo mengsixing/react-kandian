@@ -5,9 +5,11 @@ import { Result,Button,List  } from 'antd-mobile'
 import * as clicknumActions from '../../actions/clicknum'
 import Header from '../../compontents/header/header'
 import logo from './notice.png'
+import { createSelector } from 'reselect'
 
 
 class Rank extends React.Component {
+    
     shouldComponentUpdate(nextProp,nextState){
         if(nextProp.match.path==='/my' && nextProp.number===this.props.number && nextProp.loading===this.props.loading){
             return false
@@ -19,12 +21,12 @@ class Rank extends React.Component {
         this.props.history.push('/')
     }
     clicknumAsync(){
-        this.props.clicknumActions.changeClickNumberAsync();
+         this.props.clicknumActions.changeClickNumberAsync();
     }
     render(){
         var addbutton=<Button type="primary"  onClick={this.clicknumAsync.bind(this)}>手动加1</Button>;
         if(this.props.loading===true){
-            addbutton=<Button disabled  type="primary">正在加1...</Button>;
+            addbutton=<Button disabled type="primary" >正在加1...</Button>;
         }
         return (
             <div>
@@ -42,8 +44,19 @@ class Rank extends React.Component {
         )
     }
 }
+
+//这里引用reselect库，缓存mapStateToProps中的number数据，下一次组件更新，如果number不变就不需要再计算了。
+const numberSelector = state => state.clicknum.number
+const subtotalSelector = createSelector(
+    numberSelector,
+    items => items+'(uv)'
+  )
+
 function mapStateToProps(state) {
-    return { number:state.clicknum.number,loading:state.clicknum.loading }
+    return { 
+        number:subtotalSelector(state),
+        loading:state.clicknum.loading
+    }
 }
 function mapDispatchToProps(dispatch) {
     return {

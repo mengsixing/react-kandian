@@ -7,3 +7,10 @@ export function changeClickNumberAsync(data) {
         payload: data
     };
 }
+
+export function showLoadingAsync(data) {
+    return {
+        type: 'LOADING_ASYNC',
+        payload: data
+    };
+}

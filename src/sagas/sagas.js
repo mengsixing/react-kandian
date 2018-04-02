@@ -12,14 +12,24 @@ export function* incrementAsync() {
     yield delay(1000)
     yield put({ type: clicknumTypes.CHANGE_NUMBER })
 }
+
+export function* showLoadingAsync() {
+    yield put({ type: clicknumTypes.LOADING })
+}
+
+
 export function* watchIncrementAsync() {
     yield takeEvery('INCREMENT_ASYNC', incrementAsync)
+}
+export function* watchLoading() {
+    yield takeEvery('LOADING_ASYNC', showLoadingAsync)
 }
 
 
 export default function* rootSaga() {
     yield all([
         helloSaga(),
-        watchIncrementAsync()
+        watchIncrementAsync(),
+        watchLoading()
     ])
 }
