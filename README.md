@@ -32,7 +32,7 @@
 
 * redux-thunk
 * redux-saga        (抽离sagas文件,简化reducer)
-* redex-observable  (抽离epic文件,简化reducer,需引入rxjs)
+* redux-observable  (抽离epic文件,简化reducer,需引入rxjs)
 
 ### 构建工具
 
