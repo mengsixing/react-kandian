@@ -23,7 +23,7 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
   //这里使用mock数据。线上地址：http://211.149.160.35, 本地mock: http://localhost:8000
-  url='http://211.149.160.35'+url
+  url='http://yinhengli.com'+url
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
