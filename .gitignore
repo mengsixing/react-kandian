@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /dist
+/docker/build
 
 # testing
 /coverage

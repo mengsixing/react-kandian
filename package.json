@@ -4,27 +4,39 @@
   "private": true,
   "devDependencies": {
     "babel-plugin-import": "^1.6.3",
-    "react-app-rewired": "^1.4.1",
-    "react-scripts": "1.1.0"
+    "react-app-rewired": "^1.6.2",
+    "react-scripts": "^2.1.1",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "antd-mobile": "^2.1.5",
-    "axios": "^0.17.1",
+    "axios": "^0.18.0",
     "better-scroll": "^1.8.0",
-    "immutable": "^3.8.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "express": "^4.16.4",
+    "immutable": "^4.0.0-rc.12",
+    "js-base64": "^2.4.9",
+    "prop-types": "^15.6.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "redux": "^3.7.2",
+    "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.16.0",
-    "reselect": "^3.0.1"
+    "redux-saga": "^0.16.2",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-app-rewired eject"
-  }
+    "eject": "react-app-rewired eject",
+    "lint": "eslint --ext js ./src --fix",
+    "docker": "rimraf ./docker/build && yarn run build && sh createDockerImage.sh"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

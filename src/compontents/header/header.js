@@ -1,12 +1,12 @@
-import React from 'react'
-import './header.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import './header.css';
 
-class Header extends React.Component{
-    render(){
-        return (
-            <div className="header">{this.props.title}</div>
-        )
-    }
+function Header(props) {
+	return <div className="header">{props.title}</div>;
 }
 
-export default Header
+Header.propTypes = {
+	title: PropTypes.string
+};
+export default Header;
