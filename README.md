@@ -1,7 +1,7 @@
 # react-kandian
 
 [![Build Status](https://travis-ci.org/yhlben/react-kandian.svg?branch=master)](https://travis-ci.org/yhlben/react-kandian)
-[![codecov](https://codecov.io/gh/yhlben/react-kandian/branch/master/graph/badge.svg)](https://codecov.io/gh/yhlben/react-kandian)
+[![codecov](https://codecov.io/gh/yhlben/react-kandian/branch/master/graph/badge.svg)](https://codecov.io/gh/yhlben/react-kandian) [![Greenkeeper badge](https://badges.greenkeeper.io/yhlben/react-kandian.svg)](https://greenkeeper.io/)
 
 [在线预览](http://47.107.177.146:8081/)
 
