@@ -22,7 +22,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.16.2",
+    "redux-saga": "^1.1.1",
     "reselect": "^4.0.0"
   },
   "scripts": {
