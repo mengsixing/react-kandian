@@ -16,7 +16,7 @@
     "immutable": "^4.0.0-rc.12",
     "js-base64": "^2.4.9",
     "prop-types": "^15.6.2",
-    "react": "^16.6.3",
+    "react": "^16.13.1",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.2.2",
